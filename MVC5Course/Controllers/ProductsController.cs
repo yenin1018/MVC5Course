@@ -17,7 +17,7 @@ namespace MVC5Course.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            return View(db.Product.OrderByDescending(p => p.ProductId).Take(10).ToList());
+            return View(db.Product.ToList());
         }
 
         // GET: Products/Details/5
@@ -110,6 +110,8 @@ namespace MVC5Course.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Product.Find(id);
+            OrderLine orderl = db.OrderLine.Find(id);
+            db.OrderLine.Remove(orderl);
             db.Product.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");
